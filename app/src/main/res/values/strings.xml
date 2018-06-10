@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Movies Phase 2</string>
+    <string name="img_content_description">Image</string>
+    <string name="action_movies">Movies</string>
+    <string name="action_itm_pop_mv">Popular Movies</string>
+    <string name="action_itm_top_rated_mv">Top Rated Movies</string>
+    <string name="no_connection_message">No Network Connection</string>
+    <string name="settings">Settings</string>
+
+    <!-- Movie Details Activity -->
+    <string name="str_movie_release_date">Release Date</string>
+    <string name="str_movie_rating">Avg. Rating</string>
+    <string name="str_movie_plot">Plot Synopsis</string>
+
+</resources>
