@@ -4,6 +4,7 @@
     <string name="action_movies">Movies</string>
     <string name="action_itm_pop_mv">Popular Movies</string>
     <string name="action_itm_top_rated_mv">Top Rated Movies</string>
+    <string name="action_itm_fav_mv">Favorites</string>
     <string name="no_connection_message">No Network Connection</string>
     <string name="settings">Settings</string>
 

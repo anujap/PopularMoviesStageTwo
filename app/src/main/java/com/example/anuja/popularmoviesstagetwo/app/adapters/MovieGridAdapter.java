@@ -1,6 +1,8 @@
 package com.example.anuja.popularmoviesstagetwo.app.adapters;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,16 +10,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.anuja.popularmoviesstagetwo.R;
+import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
 import com.example.anuja.popularmoviesstagetwo.databinding.ItemListBinding;
 import com.example.anuja.popularmoviesstagetwo.model.MovieDetails;
 import com.example.anuja.popularmoviesstagetwo.webservice.MovieUtils;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * This is an adapter class to display movies in the grid format
  */
+
 public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.MoviesViewHolder> {
 
     private List<MovieDetails> movieList;
@@ -64,6 +70,7 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
     }
 
     public class MoviesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
         private ItemListBinding itemListBinding;
 
         public MoviesViewHolder(ItemListBinding itemListBinding) {
@@ -87,4 +94,25 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
         this.movieList = movieList;
         notifyDataSetChanged();
     }
+
+    /*
+    private  void switchLists(List<T> movieList) {
+        List<MoviesEntity> moviesEntityList = (List<MoviesEntity>) movieList;
+        ListIterator<MoviesEntity> iterator = moviesEntityList.listIterator();
+
+        List<T> movieDetailsList = new ArrayList<T>();
+
+        while (iterator.hasNext()) {
+            MovieDetails movieDetail = new MovieDetails();
+
+            movieDetail.setId(iterator.next().getId());
+            movieDetail.setOriginalTitle(iterator.next().getOriginalTitle());
+
+             movieDetailsList<MovieDetails>.add(movieDetail);
+        }
+
+        this.movieList.clear();
+        this.movieList = movieDetailsList;
+    }
+    */
 }

@@ -5,5 +5,6 @@ package com.example.anuja.popularmoviesstagetwo.common;
  */
 public enum SortMovie {
     POPULAR,
-    TOP_RATED
+    TOP_RATED,
+    FAVORITE
 }

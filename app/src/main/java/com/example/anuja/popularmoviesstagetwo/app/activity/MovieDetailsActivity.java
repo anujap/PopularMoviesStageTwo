@@ -1,27 +1,21 @@
 package com.example.anuja.popularmoviesstagetwo.app.activity;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.widget.Toast;
 
 import com.example.anuja.popularmoviesstagetwo.R;
+import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
 import com.example.anuja.popularmoviesstagetwo.databinding.ActivityMovieDetailsBinding;
 import com.example.anuja.popularmoviesstagetwo.model.MovieDetails;
+import com.example.anuja.popularmoviesstagetwo.viewmodel.MovieDetailViewModel;
 import com.example.anuja.popularmoviesstagetwo.webservice.MovieUtils;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -37,14 +31,23 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     private MovieDetails movie = null;
 
+    // viewmodel
+    private MovieDetailViewModel viewModel;
+
+    private boolean isFavorite;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_movie_details);
 
+        // get the viewmodel
+        viewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
+
         setUpActionBar();
         retrieveIntent();
         displayMovieDetails();
+        performFAB();
     }
 
     /**
@@ -93,8 +96,51 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     .load(imagePosterPath)
                     .fit()
                     .into(mBinding.ivMovieDtPoster);
+
         }
 
+    }
+
+    private void performFAB() {
+        mBinding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleFavoriteMovieClick();
+            }
+        });
+    }
+
+    private void handleFavoriteMovieClick() {
+
+        if(!isFavorite) {
+            isFavorite = true;
+            viewModel.insertMovie(getMovieEntity(movie));
+        }
+        else {
+            isFavorite = false;
+            viewModel.deleteMovie(getMovieEntity(movie));
+        }
+    }
+
+    private MoviesEntity getMovieEntity(MovieDetails movieDetails) {
+        MoviesEntity entity = new MoviesEntity();
+
+        entity.setId(movieDetails.getId());
+        entity.setVoteCount(movieDetails.getVoteCount());
+        entity.setVideo(movieDetails.getVideo());
+        entity.setVoteAverage(movieDetails.getVoteAverage());
+        entity.setTitle(movieDetails.getTitle());
+        entity.setPopularity(movieDetails.getPopularity());
+        entity.setPosterPath(movieDetails.getPosterPath());
+        entity.setOriginalLanguage(movieDetails.getOriginalLanguage());
+        entity.setOriginalTitle(movieDetails.getOriginalTitle());
+        entity.setBackdropPath(movieDetails.getBackdropPath());
+        entity.setAdult(movieDetails.getAdult());
+        entity.setOverview(movieDetails.getOverview());
+        entity.setReleaseDate(movieDetails.getReleaseDate());
+        entity.setFavorite(isFavorite);
+
+        return entity;
     }
 
     @Override

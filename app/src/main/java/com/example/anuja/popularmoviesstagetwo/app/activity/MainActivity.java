@@ -2,28 +2,23 @@ package com.example.anuja.popularmoviesstagetwo.app.activity;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Movie;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.example.anuja.popularmoviesstagetwo.R;
 import com.example.anuja.popularmoviesstagetwo.app.adapters.MovieGridAdapter;
 import com.example.anuja.popularmoviesstagetwo.common.SortMovie;
+import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
 import com.example.anuja.popularmoviesstagetwo.model.MovieDetails;
 import com.example.anuja.popularmoviesstagetwo.viewmodel.MainViewModel;
 
@@ -31,11 +26,11 @@ import java.util.List;
 
 /**
  * This class displays the movies in a grid format based on
- * menu selection - Popular/Top Rated.
+ * menu selection - Popular/Top Rated/Favorite.
  *
  * References:- https://stackoverflow.com/questions/33575731/gridlayoutmanager-how-to-auto-fit-columns
  */
-public class MainActivity extends BaseActivity implements MovieGridAdapter.GridItemClickListener {
+public class MainActivity<T> extends BaseActivity implements MovieGridAdapter.GridItemClickListener {
 
     // constants
     protected static final String MOVIE_DETAIL_ITEM = "movie_detail_item";
@@ -99,8 +94,10 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
 
         if(TextUtils.equals(sortMovie, SortMovie.POPULAR.name()))
             updateMenuSelection(menu.getItem(0));
-        else
+        else if(TextUtils.equals(sortMovie, SortMovie.TOP_RATED.name()))
             updateMenuSelection(menu.getItem(1));
+        else
+            updateMenuSelection(menu.getItem(2));
 
         return true;
     }
@@ -118,6 +115,11 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
                 sortMovie = SortMovie.TOP_RATED.name();
                 displayMoviesOnMenuSelection(item, mainViewModel.getTopRatedMoviesList().getValue());
                 return true;
+            case R.id.action_itm_fav_mv:
+                sortMovie = SortMovie.FAVORITE.name();
+                //displayMoviesOnMenuSelection(item, mainViewModel.getAllFavMoviesList().getValue());
+                //TODO:
+                //displayMoviesOnMenuSelection(item, mainViewModel.getFavoriteMoviesList().getValues());
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -130,8 +132,9 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
      * @param movies - list of movies (Popular/Top Rated)
      */
     private void displayMoviesOnMenuSelection(MenuItem item, List<MovieDetails> movies) {
-        updateMenuSelection(item);
         movieGridAdapter.swapLists(movies);
+
+        updateMenuSelection(item);
     }
 
     /**
@@ -162,6 +165,8 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
             }
 
         });
+
+        // TODO: favorite movies
     }
 
 

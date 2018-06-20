@@ -55,6 +55,8 @@ public class MovieDetails implements Parcelable {
     @SerializedName("release_date")
     private String releaseDate;
 
+    public MovieDetails() {}
+
     public MovieDetails(Integer voteCount, Integer id, Boolean isVideo, Double voteAverage, String title,
                         Double popularity, String posterPath, String originalLanguage, String originalTitle,
                         List<Integer> genreId, String backdropPath, Boolean isAdult, String overview, String releaseDate) {

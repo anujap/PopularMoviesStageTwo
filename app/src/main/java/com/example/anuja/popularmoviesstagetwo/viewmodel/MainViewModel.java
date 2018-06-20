@@ -1,10 +1,7 @@
 package com.example.anuja.popularmoviesstagetwo.viewmodel;
 
-import android.arch.lifecycle.LiveData;
+import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Transformations;
-import android.arch.lifecycle.ViewModel;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.anuja.popularmoviesstagetwo.model.MovieDetails;
@@ -13,7 +10,6 @@ import com.example.anuja.popularmoviesstagetwo.webservice.MovieRetrofitClient;
 import com.example.anuja.popularmoviesstagetwo.webservice.MovieUtils;
 import com.example.anuja.popularmoviesstagetwo.webservice.MovieWebserviceInterface;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -23,9 +19,14 @@ import retrofit2.Response;
 /**
  * The ViewModel class
  *
+ * Note:- There are no database calls from the ViewModel. This makes
+ * the code more testable.
+ *
  * References:- https://proandroiddev.com/refactor-with-the-new-viewmodel-class-b334fd88bf82
+ * https://github.com/googlesamples/android-architecture-components/blob/master/BasicSample/app/src/main/java/com/example/android/persistence/viewmodel/ProductListViewModel.java
+ * https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#7
  */
-public class MainViewModel extends ViewModel {
+public class MainViewModel extends BaseViewModel {
 
     private static final String TAG = "MainViewModel";
 
@@ -33,6 +34,10 @@ public class MainViewModel extends ViewModel {
 
     private MutableLiveData<List<MovieDetails>> popularMoviesList;
     private MutableLiveData<List<MovieDetails>> topRatedMoviesList;
+
+    public MainViewModel(Application application) {
+        super(application);
+    }
 
     public MutableLiveData<List<MovieDetails>> getPopularMoviesList() {
         if(popularMoviesList == null)
@@ -75,7 +80,6 @@ public class MainViewModel extends ViewModel {
                 @Override
                 public void onResponse(Call<MoviePage> call, Response<MoviePage> response) {
                     if(response.isSuccessful()) {
-
                         List<MovieDetails> movieList = response.body().getResults();
                         if(movieList != null && movieList.size() > 0) {
                             topRatedMoviesList.postValue(movieList);
