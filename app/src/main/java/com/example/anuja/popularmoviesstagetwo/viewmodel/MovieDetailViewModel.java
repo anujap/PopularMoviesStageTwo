@@ -1,6 +1,7 @@
 package com.example.anuja.popularmoviesstagetwo.viewmodel;
 
 import android.app.Application;
+import android.arch.lifecycle.LiveData;
 
 import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
 
@@ -26,6 +27,15 @@ public class MovieDetailViewModel extends BaseViewModel {
      */
     public void deleteMovie(MoviesEntity moviesEntity) {
         movieService.delete(moviesEntity);
+    }
+
+    /**
+     * This function checks if the movie exists in the database.
+     * @param id - the movie id
+     * @return - the entity if exists in the datasbase
+     */
+    public LiveData<Boolean> isMovieFavById(int id) {
+        return movieService.isMovieFavById(id);
     }
 
     /**

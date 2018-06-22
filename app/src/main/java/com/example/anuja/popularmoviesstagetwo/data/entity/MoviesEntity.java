@@ -3,10 +3,9 @@ package com.example.anuja.popularmoviesstagetwo.data.entity;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
 
-import com.example.anuja.popularmoviesstagetwo.common.Constants;
+import com.example.anuja.popularmoviesstagetwo.utils.Constants;
 import com.example.anuja.popularmoviesstagetwo.utils.MovieDBTypeConverters;
 
 import java.util.List;

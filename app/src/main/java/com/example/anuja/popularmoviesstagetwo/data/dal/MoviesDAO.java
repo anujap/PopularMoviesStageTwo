@@ -1,16 +1,17 @@
 package com.example.anuja.popularmoviesstagetwo.data.dal;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import com.example.anuja.popularmoviesstagetwo.common.Constants;
+import com.example.anuja.popularmoviesstagetwo.utils.Constants;
 import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
 
 import java.util.List;
+
+import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
 /**
  * This class contains the methods used for accessing the movie database.
@@ -23,11 +24,14 @@ import java.util.List;
 @Dao
 public interface MoviesDAO {
 
-    @Insert
+    @Insert(onConflict = REPLACE)
     void insert(MoviesEntity moviesEntity);
 
     @Delete
     void delete(MoviesEntity moviesEntity);
+
+    @Query("SELECT favorite FROM movie_table WHERE id=:id")
+    LiveData<Boolean> isMovieFavById(int id);
 
     @Query(Constants.MOVIE_SELECT_QUERY)
     LiveData<List<MoviesEntity>> getAllMovies();

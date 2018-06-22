@@ -1,5 +1,6 @@
 package com.example.anuja.popularmoviesstagetwo.app.service;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -12,6 +13,7 @@ import java.util.List;
 
 /**
  * This class is used to handle data operations.
+ * Reference:- https://developer.android.com/topic/libraries/architecture/livedata
  */
 public class MovieService {
 
@@ -49,6 +51,10 @@ public class MovieService {
 
     public void delete(MoviesEntity moviesEntity) {
         new DeleteAsyncTask(mMovieDao).execute(moviesEntity);
+    }
+
+    public LiveData<Boolean> isMovieFavById(int id) {
+        return mMovieDao.isMovieFavById(id);
     }
 
     private static class InsertAsyncTask extends AsyncTask<MoviesEntity, Void, Void> {

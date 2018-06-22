@@ -5,6 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="false"
+        android:id="@+id/details_coordinator_layout"
         tools:context="com.example.anuja.popularmoviesstagetwo.app.activity.MovieDetailsActivity">
 
         <android.support.design.widget.AppBarLayout
@@ -198,7 +199,7 @@
             app:layout_anchorGravity="bottom|end"
             app:layout_collapseMode="parallax"
             style="@style/Widget.Design.FloatingActionButton"
-            app:backgroundTint="@android:color/white"
-            app:srcCompat="@drawable/ic_fab" />
+            app:backgroundTint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_fab_white" />
     </android.support.design.widget.CoordinatorLayout>
 </layout>
