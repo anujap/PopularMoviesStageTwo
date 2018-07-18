@@ -2,7 +2,7 @@ package com.example.anuja.popularmoviesstagetwo.app;
 
 import android.app.Application;
 
-import com.example.anuja.popularmoviesstagetwo.app.service.MovieService;
+import com.example.anuja.popularmoviesstagetwo.app.service.MovieDbService;
 import com.example.anuja.popularmoviesstagetwo.database.MoviesDatabase;
 
 /**
@@ -19,7 +19,7 @@ public class MovieApplication extends Application {
         return MoviesDatabase.getDatabase(this);
     }
 
-    public MovieService getMovieService() {
-        return MovieService.getInstance(getMovieDatabase());
+    public MovieDbService getMovieService() {
+        return MovieDbService.getInstance(getMovieDatabase());
     }
 }

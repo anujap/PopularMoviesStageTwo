@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -59,6 +59,7 @@
                     android:id="@+id/cv_poster"
                     android:layout_width="150dp"
                     android:layout_height="210dp"
+                    android:layout_marginBottom="@dimen/margin"
                     android:layout_marginLeft="@dimen/margin"
                     android:layout_marginStart="@dimen/margin"
                     android:layout_marginTop="@dimen/margin_small"
@@ -157,11 +158,22 @@
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />
 
+                <View
+                    android:id="@+id/viewp"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginEnd="@dimen/margin"
+                    android:layout_marginRight="@dimen/margin"
+                    android:layout_below="@id/cv_poster"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/gray" />
+
                 <TextView
                     android:id="@+id/lbl_movie_plot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/cv_poster"
+                    android:layout_below="@id/viewp"
                     android:layout_marginLeft="@dimen/margin"
                     android:layout_marginRight="@dimen/margin"
                     android:layout_marginTop="@dimen/margin_large"
@@ -184,8 +196,122 @@
                     android:textColor="@android:color/black"
                     tools:text="Plot"
                     android:textSize="16sp" />
+
+                <View
+                    android:id="@+id/viewt"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginEnd="@dimen/margin"
+                    android:layout_marginRight="@dimen/margin"
+                    android:layout_below="@id/tv_movie_plot"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:id="@+id/lbl_movie_trailers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/viewt"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginRight="@dimen/margin"
+                    android:layout_marginTop="@dimen/margin"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@android:color/black"
+                    android:text="@string/str_movie_trailers"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="@dimen/margin_small"
+                    tools:text="Trailers"
+                    android:textSize="16sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rview_trailers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lbl_movie_trailers"
+                    android:scrollbars="none"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginRight="@dimen/margin"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="@dimen/margin_small">
+
+                </android.support.v7.widget.RecyclerView>
+
+                <View
+                    android:id="@+id/viewr"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginEnd="@dimen/margin"
+                    android:layout_marginRight="@dimen/margin"
+                    android:layout_below="@id/rview_trailers"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:id="@+id/lbl_movie_reviews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/viewr"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginRight="@dimen/margin"
+                    android:layout_marginTop="@dimen/margin"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@android:color/black"
+                    android:text="@string/str_movie_reviews"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="@dimen/margin_small"
+                    tools:text="Reviews"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/lbl_movie_reviewstemp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lbl_movie_reviews"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginRight="@dimen/margin"
+                    android:layout_marginTop="@dimen/margin"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@android:color/black"
+                    android:text="@string/str_movie_reviews"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="@dimen/margin_small"
+                    tools:text="Reviews"
+                    android:textSize="16sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rview_reviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lbl_movie_reviews"
+                    android:scrollbars="none"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginRight="@dimen/margin"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="@dimen/margin_small">
+
+                </android.support.v7.widget.RecyclerView>
             </RelativeLayout>
 
         </android.support.v4.widget.NestedScrollView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Design.FloatingActionButton"
+            android:elevation="6dp"
+            android:layout_marginRight="8dp"
+            app:layout_anchor="@+id/collapsible_toolbar"
+            app:layout_anchorGravity="bottom|end"
+            android:backgroundTint="@android:color/white"
+            android:src="@drawable/ic_fab_unselected" />
     </android.support.design.widget.CoordinatorLayout>
 </layout>

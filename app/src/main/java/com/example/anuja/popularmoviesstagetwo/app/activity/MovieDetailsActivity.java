@@ -3,52 +3,43 @@ package com.example.anuja.popularmoviesstagetwo.app.activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.anuja.popularmoviesstagetwo.R;
 import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
 import com.example.anuja.popularmoviesstagetwo.databinding.ActivityMovieDetailsBinding;
-import com.example.anuja.popularmoviesstagetwo.model.MovieDetails;
 import com.example.anuja.popularmoviesstagetwo.viewmodel.MovieDetailViewModel;
 import com.example.anuja.popularmoviesstagetwo.webservice.MovieUtils;
 import com.squareup.picasso.Picasso;
 
 /**
  * This class shows the details of the movie
- *
- * Note:- This class currently does not extend from the BaseActivity.
- * But for the Phase2, it will.
- *
  */
-public class MovieDetailsActivity extends AppCompatActivity {
+public class MovieDetailsActivity extends BaseActivity {
 
     private static final String FAV_MOV_ITEM = "fav_mov_item";
 
     private ActivityMovieDetailsBinding mBinding;
-    private MovieDetails movie = null;
+    private MoviesEntity movie = null;
 
     // viewmodel
     private MovieDetailViewModel viewModel;
     private boolean isFavorite;
-    private Snackbar snackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_movie_details);
-
         // get the viewmodel
         viewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
 
         setUpActionBar();
         retrieveIntent(savedInstanceState);
         displayMovieDetails();
-        performFAB();
+        performFABClick();
     }
 
     /**
@@ -80,8 +71,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
      * Function called to toggle the favorite button
      */
     private void toggleFavButton(Bundle savedInstanceState) {
-        if(savedInstanceState != null && savedInstanceState.containsKey(FAV_MOV_ITEM))
+        if(savedInstanceState != null && savedInstanceState.containsKey(FAV_MOV_ITEM)) {
             isFavorite = savedInstanceState.getBoolean(FAV_MOV_ITEM);
+            toggleFABImageResource();
+        }
         else {
             setFavButton(movie.getId());
         }
@@ -89,13 +82,17 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     /**
      * function called to get fav column info
-     * set
      * @param id - movie id
      */
     private void setFavButton(int id) {
 
         viewModel.isMovieFavById(id).observe(this, isFav -> {
-            setFavButton(isFav);
+
+            if(isFav != null) {
+                setFavButton(isFav);
+                toggleFABImageResource();
+            }
+
         });
     }
 
@@ -135,7 +132,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     }
 
-    private void performFAB() {
+    private void performFABClick() {
         mBinding.fab.setOnClickListener(v -> {
             handleFavoriteMovieClick();
         });
@@ -143,53 +140,63 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     /**
      * Function called to handle the favorite button click.
-     * This button will insert/delect the movie from the database
+     * This button will insert/delete the movie from the database
      */
     private void handleFavoriteMovieClick() {
-
-        if(!isFavorite) {
-            isFavorite = true;
-            viewModel.insertMovie(getMovieEntity(movie));
-            mBinding.fab.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-            mBinding.fab.setImageResource(R.drawable.ic_fab);
-            if(snackbar == null) {
-                snackbar = Snackbar.make(mBinding.detailsCoordinatorLayout, R.string.str_mv_favorite, Snackbar.LENGTH_LONG);
-                snackbar.show();
-            }
-        }
-        else {
-            isFavorite = false;
-            viewModel.deleteMovie(getMovieEntity(movie));
-            mBinding.fab.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimary));
-            mBinding.fab.setImageResource(R.drawable.ic_fab_white);
-            if(snackbar == null) {
-                snackbar = Snackbar.make(mBinding.detailsCoordinatorLayout, R.string.str_mv_unfavorite, Snackbar.LENGTH_LONG);
-                snackbar.show();
-            }
-        }
+        if(!isFavorite)
+            insertMovie();
+        else
+            deleteMovie();
     }
 
-    private MoviesEntity getMovieEntity(MovieDetails movieDetails) {
-        MoviesEntity entity = new MoviesEntity();
-
-        entity.setId(movieDetails.getId());
-        entity.setVoteCount(movieDetails.getVoteCount());
-        entity.setVideo(movieDetails.getVideo());
-        entity.setVoteAverage(movieDetails.getVoteAverage());
-        entity.setTitle(movieDetails.getTitle());
-        entity.setPopularity(movieDetails.getPopularity());
-        entity.setPosterPath(movieDetails.getPosterPath());
-        entity.setOriginalLanguage(movieDetails.getOriginalLanguage());
-        entity.setOriginalTitle(movieDetails.getOriginalTitle());
-        entity.setBackdropPath(movieDetails.getBackdropPath());
-        entity.setAdult(movieDetails.getAdult());
-        entity.setOverview(movieDetails.getOverview());
-        entity.setReleaseDate(movieDetails.getReleaseDate());
-        entity.setFavorite(isFavorite);
-
-        return entity;
+    /**
+     * Function called to insert the movie into the database
+     */
+    private void insertMovie() {
+        isFavorite = true;
+        viewModel.insertMovie(movie);
+        toggleFABImageResource();
+        showSnackBar(mBinding.detailsCoordinatorLayout, R.string.str_mv_favorite);
     }
 
+    /**
+     * Function called to delete movie from the database
+     */
+    private void deleteMovie() {
+        isFavorite = false;
+        viewModel.deleteMovie(movie);
+        toggleFABImageResource();
+        showSnackBar(mBinding.detailsCoordinatorLayout, R.string.str_mv_unfavorite);
+    }
+
+    /**
+     * Function called to toggle favorite button image
+     */
+    private void toggleFABImageResource() {
+        if(isFavorite)
+            mBinding.fab.setImageResource(R.drawable.ic_fab_selected);
+        else
+            mBinding.fab.setImageResource(R.drawable.ic_fab_unselected);
+    }
+
+    /**
+     * Function called to retrieve trailers and reviews specifc to the
+     * movie
+     */
+    private void retrieveTrailersAndReviews() {
+        if(movie != null) {
+            viewModel.displayMovieTrailersAndReviews(String.valueOf(movie.getId()));
+
+            viewModel.getMovieTrailerList().observe(this, trailerResults -> {
+                // display the trailers in the list
+            });
+
+            viewModel.getMovieReviewList().observe(this, reviewResults -> {
+                // display the reviews in the list
+            });
+        }
+
+    }
     //private void
 
     @Override
@@ -209,5 +216,21 @@ public class MovieDetailsActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
 
         outState.putBoolean(FAV_MOV_ITEM, isFavorite);
+    }
+
+    /**
+     * Function called when the connection is available
+     */
+    @Override
+    protected void onConnected() {
+        //retrieveTrailersAndReviews();
+    }
+
+    /**
+     * Function called when the connection is unavailable
+     */
+    @Override
+    protected void onDisconnected() {
+        showSnackBar(mBinding.detailsCoordinatorLayout, R.string.no_connection_message);
     }
 }

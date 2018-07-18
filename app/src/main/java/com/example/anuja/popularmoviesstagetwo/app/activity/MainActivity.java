@@ -2,15 +2,14 @@ package com.example.anuja.popularmoviesstagetwo.app.activity;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.graphics.Movie;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,7 +18,6 @@ import com.example.anuja.popularmoviesstagetwo.R;
 import com.example.anuja.popularmoviesstagetwo.app.adapters.MovieGridAdapter;
 import com.example.anuja.popularmoviesstagetwo.common.SortMovie;
 import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
-import com.example.anuja.popularmoviesstagetwo.model.MovieDetails;
 import com.example.anuja.popularmoviesstagetwo.viewmodel.MainViewModel;
 
 import java.util.List;
@@ -30,7 +28,7 @@ import java.util.List;
  *
  * References:- https://stackoverflow.com/questions/33575731/gridlayoutmanager-how-to-auto-fit-columns
  */
-public class MainActivity<T> extends BaseActivity implements MovieGridAdapter.GridItemClickListener {
+public class MainActivity extends BaseActivity implements MovieGridAdapter.GridItemClickListener {
 
     // constants
     protected static final String MOVIE_DETAIL_ITEM = "movie_detail_item";
@@ -40,7 +38,6 @@ public class MainActivity<T> extends BaseActivity implements MovieGridAdapter.Gr
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private MovieGridAdapter movieGridAdapter;
-    private Snackbar snackbar;
     private CoordinatorLayout coordinatorLayout;
 
     // viewmodel
@@ -63,6 +60,7 @@ public class MainActivity<T> extends BaseActivity implements MovieGridAdapter.Gr
         setUpToolBar();
         setUpRecyclerView();
 
+        retrieveFavoriteMovies();
     }
 
     /**
@@ -117,9 +115,7 @@ public class MainActivity<T> extends BaseActivity implements MovieGridAdapter.Gr
                 return true;
             case R.id.action_itm_fav_mv:
                 sortMovie = SortMovie.FAVORITE.name();
-                //displayMoviesOnMenuSelection(item, mainViewModel.getAllFavMoviesList().getValue());
-                //TODO:
-                //displayMoviesOnMenuSelection(item, mainViewModel.getFavoriteMoviesList().getValues());
+                displayMoviesOnMenuSelection(item);
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -129,11 +125,20 @@ public class MainActivity<T> extends BaseActivity implements MovieGridAdapter.Gr
      * Function called to display the list of movies based on the menu
      * selection - Popular/Top Rated
      * @param item - Menu item
-     * @param movies - list of movies (Popular/Top Rated)
+     * @param movies - list of movies (Popular/Top Rated/Favorite)
      */
-    private void displayMoviesOnMenuSelection(MenuItem item, List<MovieDetails> movies) {
+    private void displayMoviesOnMenuSelection(MenuItem item, List<MoviesEntity> movies) {
         movieGridAdapter.swapLists(movies);
+        updateMenuSelection(item);
+    }
 
+    /**
+     * Function called to display the list of movies based on the menu
+     * selection - Favorite
+     * @param item - Menu item
+     */
+    private void displayMoviesOnMenuSelection(MenuItem item) {
+        retrieveFavoriteMovies();
         updateMenuSelection(item);
     }
 
@@ -152,29 +157,34 @@ public class MainActivity<T> extends BaseActivity implements MovieGridAdapter.Gr
     private void retrieveQueriedMovies() {
         mainViewModel.displayMovies();
 
-        mainViewModel.getTopRatedMoviesList().observe(this, movieDetails -> {
+        mainViewModel.getTopRatedMoviesList().observe(this, moviesEntities -> {
             if(TextUtils.equals(sortMovie, SortMovie.TOP_RATED.name())) {
-                movieGridAdapter.swapLists(movieDetails);
+                movieGridAdapter.swapLists(moviesEntities);
             }
-
         });
 
-        mainViewModel.getPopularMoviesList().observe(this, movieDetails -> {
+        mainViewModel.getPopularMoviesList().observe(this, moviesEntities -> {
             if(TextUtils.equals(sortMovie, SortMovie.POPULAR.name())) {
-                movieGridAdapter.swapLists(movieDetails);
+                movieGridAdapter.swapLists(moviesEntities);
             }
-
         });
-
-        // TODO: favorite movies
     }
 
+    /**
+     * Function called to retrieve favorite movies from the database
+     */
+    private void retrieveFavoriteMovies() {
+        mainViewModel.getFavoriteMoviesList().observe(this, movieEntities -> {
+            movieGridAdapter.swapLists(movieEntities);
+
+        });
+    }
 
     /**
      * Function called when the grid item is clicked.
      */
     @Override
-    public void onGridItemClick(MovieDetails movie) {
+    public void onGridItemClick(MoviesEntity movie) {
         //click event when an item is clicked
         Intent intent = new Intent(this, MovieDetailsActivity.class);
         intent.putExtra(MOVIE_DETAIL_ITEM, movie);
@@ -194,12 +204,8 @@ public class MainActivity<T> extends BaseActivity implements MovieGridAdapter.Gr
      */
     @Override
     protected void onDisconnected() {
-        if(snackbar == null) {
-            snackbar = Snackbar.make(coordinatorLayout, R.string.no_connection_message, Snackbar.LENGTH_LONG);
-            snackbar.show();
-        }
+        showSnackBar(coordinatorLayout, R.string.no_connection_message);
     }
-
 
     /**
      * function called to auto fit the number of columns in a grid

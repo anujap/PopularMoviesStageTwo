@@ -34,5 +34,5 @@ public interface MoviesDAO {
     LiveData<Boolean> isMovieFavById(int id);
 
     @Query(Constants.MOVIE_SELECT_QUERY)
-    LiveData<List<MoviesEntity>> getAllMovies();
+    LiveData<List<MoviesEntity>> getFavoriteMovies();
 }

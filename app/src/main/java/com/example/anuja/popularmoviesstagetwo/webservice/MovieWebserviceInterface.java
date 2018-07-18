@@ -1,6 +1,8 @@
 package com.example.anuja.popularmoviesstagetwo.webservice;
 
 import com.example.anuja.popularmoviesstagetwo.model.MoviePage;
+import com.example.anuja.popularmoviesstagetwo.model.ReviewPage;
+import com.example.anuja.popularmoviesstagetwo.model.TrailerPage;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -24,4 +26,10 @@ public interface MovieWebserviceInterface {
      */
     @GET(MovieUtils.MOVIE_PATH + "{endpoint}")
     Call<MoviePage> getMovies(@Path(MovieUtils.ENDPOINT_PARAM) String endpoint, @Query(MovieUtils.API_KEY_PARAM) String apiKey);
+
+    @GET(MovieUtils.MOVIE_PATH + "{id}" + "/videos")
+    Call<TrailerPage> getMovieTrailers(@Path("id") String movieId, @Query(MovieUtils.API_KEY_PARAM) String apiKey);
+
+    @GET(MovieUtils.MOVIE_PATH + "{id}" + "/reviews")
+    Call<ReviewPage> getMovieReviews(@Path("id") String movieId, @Query(MovieUtils.API_KEY_PARAM) String apiKey);
 }

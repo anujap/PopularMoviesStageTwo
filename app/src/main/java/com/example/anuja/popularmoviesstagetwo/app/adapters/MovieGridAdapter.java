@@ -1,10 +1,9 @@
 package com.example.anuja.popularmoviesstagetwo.app.adapters;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +11,10 @@ import android.view.ViewGroup;
 import com.example.anuja.popularmoviesstagetwo.R;
 import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
 import com.example.anuja.popularmoviesstagetwo.databinding.ItemListBinding;
-import com.example.anuja.popularmoviesstagetwo.model.MovieDetails;
 import com.example.anuja.popularmoviesstagetwo.webservice.MovieUtils;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 /**
  * This is an adapter class to display movies in the grid format
@@ -26,15 +22,15 @@ import java.util.ListIterator;
 
 public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.MoviesViewHolder> {
 
-    private List<MovieDetails> movieList;
+    private List<MoviesEntity> movieList;
     private GridItemClickListener itemClickListener;
     private Context context;
 
     public interface GridItemClickListener {
-        void onGridItemClick(MovieDetails movie);
+        void onGridItemClick(MoviesEntity movie);
     }
 
-    public MovieGridAdapter(List<MovieDetails> movies, GridItemClickListener listener) {
+    public MovieGridAdapter(List<MoviesEntity> movies, GridItemClickListener listener) {
         this.movieList = movies;
         this.itemClickListener = listener;
     }
@@ -50,9 +46,11 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
 
     @Override
     public void onBindViewHolder(@NonNull MoviesViewHolder holder, int position) {
-        MovieDetails movie = movieList.get(position);
+        MoviesEntity movie = movieList.get(position);
 
         String imagePath = MovieUtils.BASE_IMG_URL + MovieUtils.THUMB_IMG_SIZE + movie.getPosterPath();
+
+        Log.i("Test", "imagePath: " + imagePath);
 
         Picasso.with(context)
                 .load(imagePath)
@@ -85,34 +83,13 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            MovieDetails movieDetail = movieList.get(position);
+            MoviesEntity movieDetail = movieList.get(position);
             itemClickListener.onGridItemClick(movieDetail);
         }
     }
 
-    public void swapLists(List<MovieDetails> movieList) {
+    public void swapLists(List<MoviesEntity> movieList) {
         this.movieList = movieList;
         notifyDataSetChanged();
     }
-
-    /*
-    private  void switchLists(List<T> movieList) {
-        List<MoviesEntity> moviesEntityList = (List<MoviesEntity>) movieList;
-        ListIterator<MoviesEntity> iterator = moviesEntityList.listIterator();
-
-        List<T> movieDetailsList = new ArrayList<T>();
-
-        while (iterator.hasNext()) {
-            MovieDetails movieDetail = new MovieDetails();
-
-            movieDetail.setId(iterator.next().getId());
-            movieDetail.setOriginalTitle(iterator.next().getOriginalTitle());
-
-             movieDetailsList<MovieDetails>.add(movieDetail);
-        }
-
-        this.movieList.clear();
-        this.movieList = movieDetailsList;
-    }
-    */
 }

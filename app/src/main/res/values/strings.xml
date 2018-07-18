@@ -12,6 +12,8 @@
     <string name="str_movie_release_date">Release Date</string>
     <string name="str_movie_rating">Avg. Rating</string>
     <string name="str_movie_plot">Plot Synopsis</string>
+    <string name="str_movie_trailers">Trailers</string>
+    <string name="str_movie_reviews">Reviews</string>
     <string name="str_mv_unfavorite">Movie removed from favorites</string>
     <string name="str_mv_favorite">Movie added to favorites</string>
 </resources>

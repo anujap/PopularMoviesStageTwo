@@ -3,10 +3,8 @@ package com.example.anuja.popularmoviesstagetwo.database;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
-import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
-import com.example.anuja.popularmoviesstagetwo.utils.MovieDBTypeConverters;
 import com.example.anuja.popularmoviesstagetwo.data.dal.MoviesDAO;
 import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
 
@@ -17,7 +15,6 @@ import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
  * Reference:- https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#0
  */
 @Database(entities = {MoviesEntity.class}, version = 1, exportSchema = false)
-//@TypeConverters({MovieDBTypeConverters.class})
 public abstract class MoviesDatabase extends RoomDatabase {
 
     public abstract MoviesDAO moviesDAO();

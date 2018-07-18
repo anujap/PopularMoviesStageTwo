@@ -15,27 +15,27 @@ import java.util.List;
  * This class is used to handle data operations.
  * Reference:- https://developer.android.com/topic/libraries/architecture/livedata
  */
-public class MovieService {
+public class MovieDbService {
 
     private MutableLiveData<List<MoviesEntity>> mAllMovies;
 
-    private static MovieService movieServiceInstance;
+    private static MovieDbService movieDbServiceInstance;
     private MoviesDatabase moviesDatabase;
     private MoviesDAO mMovieDao;
 
     // gets a handle to the database and initializes the member variables
-    public static MovieService getInstance(MoviesDatabase moviesDatabase) {
-        if(movieServiceInstance == null) {
-            synchronized (MovieService.class) {
-                if(movieServiceInstance == null) {
-                    movieServiceInstance = new MovieService(moviesDatabase);
+    public static MovieDbService getInstance(MoviesDatabase moviesDatabase) {
+        if(movieDbServiceInstance == null) {
+            synchronized (MovieDbService.class) {
+                if(movieDbServiceInstance == null) {
+                    movieDbServiceInstance = new MovieDbService(moviesDatabase);
                 }
             }
         }
-        return movieServiceInstance;
+        return movieDbServiceInstance;
     }
 
-    public MovieService(MoviesDatabase moviesDatabase) {
+    public MovieDbService(MoviesDatabase moviesDatabase) {
         this.moviesDatabase = moviesDatabase;
         mMovieDao = moviesDatabase.moviesDAO();
     }
@@ -43,18 +43,34 @@ public class MovieService {
     /**
      * Wrapper for the insert method.
      * This operation needs to be performed on the non UI thread.
-     * @param moviesEntity
+     * @param moviesEntity - entity that is to be inserted
      */
     public void insert(MoviesEntity moviesEntity) {
         new InsertAsyncTask(mMovieDao).execute(moviesEntity);
     }
 
+    /**
+     * Wrapper for the delete method
+     * This operation needs to be performed on the non UI thread
+     * @param moviesEntity - entity that is to be deleted
+     */
     public void delete(MoviesEntity moviesEntity) {
         new DeleteAsyncTask(mMovieDao).execute(moviesEntity);
     }
 
+    /**
+     * Function called to get the isFavorite column of the movie by id
+     */
     public LiveData<Boolean> isMovieFavById(int id) {
         return mMovieDao.isMovieFavById(id);
+    }
+
+    /**
+     * Function called to return all the movies that are marked favorite
+     * (from the database)
+     */
+    public LiveData<List<MoviesEntity>> getFavoriteMovies() {
+        return mMovieDao.getFavoriteMovies();
     }
 
     private static class InsertAsyncTask extends AsyncTask<MoviesEntity, Void, Void> {

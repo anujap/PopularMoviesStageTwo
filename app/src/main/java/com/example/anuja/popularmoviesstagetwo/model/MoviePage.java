@@ -1,5 +1,6 @@
 package com.example.anuja.popularmoviesstagetwo.model;
 
+import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class MoviePage {
     private int totalPages;
 
     @SerializedName("results")
-    private ArrayList<MovieDetails> results;
+    private ArrayList<MoviesEntity> results;
 
     public int getPage() {
         return page;
@@ -45,11 +46,11 @@ public class MoviePage {
         this.totalPages = totalPages;
     }
 
-    public ArrayList<MovieDetails> getResults() {
+    public ArrayList<MoviesEntity> getResults() {
         return results;
     }
 
-    public void setResults(ArrayList<MovieDetails> results) {
+    public void setResults(ArrayList<MoviesEntity> results) {
         this.results = results;
     }
 }

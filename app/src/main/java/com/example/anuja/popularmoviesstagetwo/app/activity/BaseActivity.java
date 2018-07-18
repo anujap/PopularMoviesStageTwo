@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -25,6 +27,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     // connection is not available
     protected abstract void onDisconnected();
+
+    // snackbar
+    private Snackbar snackbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,5 +53,17 @@ public abstract class BaseActivity extends AppCompatActivity {
                     onDisconnected();
             }
         });
+    }
+
+    /**
+     * Function called to show snack bar
+     * @param resId - res id to display the message
+     */
+    protected void showSnackBar(CoordinatorLayout coordinatorLayout, int resId) {
+        if(snackbar == null) {
+            snackbar = Snackbar.make(coordinatorLayout, resId, Snackbar.LENGTH_LONG);
+            snackbar.show();
+            snackbar = null;
+        }
     }
 }

@@ -1,10 +1,11 @@
 package com.example.anuja.popularmoviesstagetwo.viewmodel;
 
 import android.app.Application;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
-import com.example.anuja.popularmoviesstagetwo.model.MovieDetails;
+import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
 import com.example.anuja.popularmoviesstagetwo.model.MoviePage;
 import com.example.anuja.popularmoviesstagetwo.webservice.MovieRetrofitClient;
 import com.example.anuja.popularmoviesstagetwo.webservice.MovieUtils;
@@ -32,20 +33,20 @@ public class MainViewModel extends BaseViewModel {
 
     private MovieWebserviceInterface movieWebservice = MovieRetrofitClient.getInstance().getMovieWebservice();
 
-    private MutableLiveData<List<MovieDetails>> popularMoviesList;
-    private MutableLiveData<List<MovieDetails>> topRatedMoviesList;
+    private MutableLiveData<List<MoviesEntity>> popularMoviesList;
+    private MutableLiveData<List<MoviesEntity>> topRatedMoviesList;
 
     public MainViewModel(Application application) {
         super(application);
     }
 
-    public MutableLiveData<List<MovieDetails>> getPopularMoviesList() {
+    public MutableLiveData<List<MoviesEntity>> getPopularMoviesList() {
         if(popularMoviesList == null)
             popularMoviesList = new MutableLiveData<>();
         return popularMoviesList;
     }
 
-    public MutableLiveData<List<MovieDetails>> getTopRatedMoviesList() {
+    public MutableLiveData<List<MoviesEntity>> getTopRatedMoviesList() {
         if(topRatedMoviesList == null)
             topRatedMoviesList = new MutableLiveData<>();
         return topRatedMoviesList;
@@ -61,10 +62,9 @@ public class MainViewModel extends BaseViewModel {
                 public void onResponse(Call<MoviePage> call, Response<MoviePage> response) {
                     if(response.isSuccessful()) {
 
-                        List<MovieDetails> movieList = response.body().getResults();
-                        if(movieList != null && movieList.size() > 0) {
+                        List<MoviesEntity> movieList = response.body().getResults();
+                        if(movieList != null && movieList.size() > 0)
                             popularMoviesList.postValue(movieList);
-                        }
                     }
                 }
 
@@ -80,7 +80,7 @@ public class MainViewModel extends BaseViewModel {
                 @Override
                 public void onResponse(Call<MoviePage> call, Response<MoviePage> response) {
                     if(response.isSuccessful()) {
-                        List<MovieDetails> movieList = response.body().getResults();
+                        List<MoviesEntity> movieList = response.body().getResults();
                         if(movieList != null && movieList.size() > 0) {
                             topRatedMoviesList.postValue(movieList);
                         }
@@ -93,5 +93,13 @@ public class MainViewModel extends BaseViewModel {
                 }
             });
         }
+    }
+
+    /**
+     * Function called to display movies marked as favorite from the
+     * database
+     */
+    public LiveData<List<MoviesEntity>> getFavoriteMoviesList() {
+        return movieDbService.getFavoriteMovies();
     }
 }
