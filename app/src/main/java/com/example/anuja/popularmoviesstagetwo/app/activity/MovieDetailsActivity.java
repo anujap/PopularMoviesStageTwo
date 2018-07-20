@@ -3,14 +3,18 @@ package com.example.anuja.popularmoviesstagetwo.app.activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.anuja.popularmoviesstagetwo.R;
 import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
 import com.example.anuja.popularmoviesstagetwo.databinding.ActivityMovieDetailsBinding;
+import com.example.anuja.popularmoviesstagetwo.utils.MoviesExecutor;
 import com.example.anuja.popularmoviesstagetwo.viewmodel.MovieDetailViewModel;
 import com.example.anuja.popularmoviesstagetwo.webservice.MovieUtils;
 import com.squareup.picasso.Picasso;
@@ -62,7 +66,6 @@ public class MovieDetailsActivity extends BaseActivity {
         Intent intent = getIntent();
         if(intent.hasExtra(MainActivity.MOVIE_DETAIL_ITEM)) {
             movie = intent.getParcelableExtra(MainActivity.MOVIE_DETAIL_ITEM);
-
             toggleFavButton(savedInstanceState);
         }
     }
@@ -85,30 +88,21 @@ public class MovieDetailsActivity extends BaseActivity {
      * @param id - movie id
      */
     private void setFavButton(int id) {
-
         viewModel.isMovieFavById(id).observe(this, isFav -> {
 
-            if(isFav != null) {
-                setFavButton(isFav);
-                toggleFABImageResource();
-            }
+            if(isFav != null)
+                this.isFavorite = isFav;
+            else
+                this.isFavorite = false;
 
+            toggleFABImageResource();
         });
-    }
-
-    /**
-     * Function called to check if the selected movie
-     * is available in the database
-     */
-    private void setFavButton(boolean isFavorite) {
-       this.isFavorite = isFavorite;
     }
 
     /**
      * Function called to display movie specific information
      */
     private void displayMovieDetails() {
-
         if(movie != null) {
             setTitle(movie.getTitle());
             mBinding.tvMovieTitle.setText(movie.getOriginalTitle());
@@ -154,8 +148,8 @@ public class MovieDetailsActivity extends BaseActivity {
      */
     private void insertMovie() {
         isFavorite = true;
+        movie.setFavorite(isFavorite);
         viewModel.insertMovie(movie);
-        toggleFABImageResource();
         showSnackBar(mBinding.detailsCoordinatorLayout, R.string.str_mv_favorite);
     }
 
@@ -164,8 +158,8 @@ public class MovieDetailsActivity extends BaseActivity {
      */
     private void deleteMovie() {
         isFavorite = false;
+        //movie.setFavorite(isFavorite);
         viewModel.deleteMovie(movie);
-        toggleFABImageResource();
         showSnackBar(mBinding.detailsCoordinatorLayout, R.string.str_mv_unfavorite);
     }
 
@@ -173,31 +167,12 @@ public class MovieDetailsActivity extends BaseActivity {
      * Function called to toggle favorite button image
      */
     private void toggleFABImageResource() {
+        Log.i("Test", "***** toggleFABImageResource: " + this.isFavorite);
         if(isFavorite)
-            mBinding.fab.setImageResource(R.drawable.ic_fab_selected);
+            mBinding.fab.setImageDrawable(getDrawable(R.drawable.ic_fab_selected));
         else
-            mBinding.fab.setImageResource(R.drawable.ic_fab_unselected);
+            mBinding.fab.setImageDrawable(getDrawable(R.drawable.ic_fab_unselected));
     }
-
-    /**
-     * Function called to retrieve trailers and reviews specifc to the
-     * movie
-     */
-    private void retrieveTrailersAndReviews() {
-        if(movie != null) {
-            viewModel.displayMovieTrailersAndReviews(String.valueOf(movie.getId()));
-
-            viewModel.getMovieTrailerList().observe(this, trailerResults -> {
-                // display the trailers in the list
-            });
-
-            viewModel.getMovieReviewList().observe(this, reviewResults -> {
-                // display the reviews in the list
-            });
-        }
-
-    }
-    //private void
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -233,4 +208,4 @@ public class MovieDetailsActivity extends BaseActivity {
     protected void onDisconnected() {
         showSnackBar(mBinding.detailsCoordinatorLayout, R.string.no_connection_message);
     }
-}
+ }

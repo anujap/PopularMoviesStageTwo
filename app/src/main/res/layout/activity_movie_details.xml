@@ -313,7 +313,7 @@
             android:layout_marginRight="8dp"
             app:layout_anchor="@+id/collapsible_toolbar"
             app:layout_anchorGravity="bottom|end"
-            android:backgroundTint="@android:color/white"
+            app:backgroundTint="@android:color/white"
             android:src="@drawable/ic_fab_unselected" />
     </android.support.design.widget.CoordinatorLayout>
 </layout>

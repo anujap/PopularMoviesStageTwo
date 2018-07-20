@@ -30,7 +30,7 @@ public interface MoviesDAO {
     @Delete
     void delete(MoviesEntity moviesEntity);
 
-    @Query("SELECT favorite FROM movie_table WHERE id=:id")
+    @Query("SELECT is_favorite FROM movie_table WHERE id=:id")
     LiveData<Boolean> isMovieFavById(int id);
 
     @Query(Constants.MOVIE_SELECT_QUERY)

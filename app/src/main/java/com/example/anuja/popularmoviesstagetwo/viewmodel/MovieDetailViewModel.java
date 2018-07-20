@@ -3,6 +3,7 @@ package com.example.anuja.popularmoviesstagetwo.viewmodel;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.os.Handler;
 import android.util.Log;
 
 import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;

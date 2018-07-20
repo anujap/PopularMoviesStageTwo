@@ -3,7 +3,6 @@ package com.example.anuja.popularmoviesstagetwo.app.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,8 +48,6 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
         MoviesEntity movie = movieList.get(position);
 
         String imagePath = MovieUtils.BASE_IMG_URL + MovieUtils.THUMB_IMG_SIZE + movie.getPosterPath();
-
-        Log.i("Test", "imagePath: " + imagePath);
 
         Picasso.with(context)
                 .load(imagePath)

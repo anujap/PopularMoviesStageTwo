@@ -3,6 +3,8 @@ package com.example.anuja.popularmoviesstagetwo.app.service;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 import com.example.anuja.popularmoviesstagetwo.data.dal.MoviesDAO;
@@ -73,6 +75,9 @@ public class MovieDbService {
         return mMovieDao.getFavoriteMovies();
     }
 
+    /**
+     * async task to perform insert operation
+     */
     private static class InsertAsyncTask extends AsyncTask<MoviesEntity, Void, Void> {
 
         private MoviesDAO mAsyncMoviesDao;
@@ -90,6 +95,9 @@ public class MovieDbService {
         }
     }
 
+    /**
+     * async task to perform the delete operation
+     */
     private static class DeleteAsyncTask extends AsyncTask<MoviesEntity, Void, Void> {
 
         private MoviesDAO mAsyncMoviesDao;
@@ -106,4 +114,35 @@ public class MovieDbService {
             return null;
         }
     }
+
+    /**
+     * async task to get the favorite column of the specified movie id
+     */
+    /*
+    private static class FavoriteAsyncTask extends AsyncTask<Integer, Void, Boolean> {
+
+        private MoviesDAO mAsyncMoviesDao;
+        private Handler handler;
+
+        FavoriteAsyncTask(MoviesDAO mAsyncMoviesDao, Handler handler) {
+            this.mAsyncMoviesDao = mAsyncMoviesDao;
+            this.handler = handler;
+        }
+
+        @Override
+        protected Boolean doInBackground(Integer... integers) {
+            Log.i("Test", "doInBackground id: " + integers[0]);
+            return mAsyncMoviesDao.isMovieFavById(integers[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isFavorite) {
+            super.onPostExecute(isFavorite);
+            Log.i("Test", "onPostExecute: " + isFavorite);
+            Message message = new Message();
+            message.obj = isFavorite;
+            handler.sendMessage(message);
+        }
+    }
+    */
 }

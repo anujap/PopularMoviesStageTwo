@@ -96,7 +96,7 @@ public class MoviesEntity implements Parcelable {
     private String releaseDate;
 
     @NonNull
-    @ColumnInfo(name="favorite")
+    @ColumnInfo(name="is_favorite")
     private boolean isFavorite;
 
     public MoviesEntity(){}
