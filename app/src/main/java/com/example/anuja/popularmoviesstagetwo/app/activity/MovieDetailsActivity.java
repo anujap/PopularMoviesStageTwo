@@ -3,18 +3,14 @@ package com.example.anuja.popularmoviesstagetwo.app.activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.anuja.popularmoviesstagetwo.R;
 import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
 import com.example.anuja.popularmoviesstagetwo.databinding.ActivityMovieDetailsBinding;
-import com.example.anuja.popularmoviesstagetwo.utils.MoviesExecutor;
 import com.example.anuja.popularmoviesstagetwo.viewmodel.MovieDetailViewModel;
 import com.example.anuja.popularmoviesstagetwo.webservice.MovieUtils;
 import com.squareup.picasso.Picasso;
@@ -167,7 +163,6 @@ public class MovieDetailsActivity extends BaseActivity {
      * Function called to toggle favorite button image
      */
     private void toggleFABImageResource() {
-        Log.i("Test", "***** toggleFABImageResource: " + this.isFavorite);
         if(isFavorite)
             mBinding.fab.setImageDrawable(getDrawable(R.drawable.ic_fab_selected));
         else
