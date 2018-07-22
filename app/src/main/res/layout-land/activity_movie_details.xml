@@ -240,13 +240,14 @@
 
                 </android.support.v7.widget.RecyclerView>
 
+                <!--
                 <View
                     android:id="@+id/viewr"
                     android:layout_marginLeft="@dimen/margin"
                     android:layout_marginStart="@dimen/margin"
                     android:layout_marginEnd="@dimen/margin"
                     android:layout_marginRight="@dimen/margin"
-                    android:layout_below="@id/rview_trailers"
+                    android:layout_below="@id/elistview_trailers"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:background="@color/gray" />
@@ -298,6 +299,7 @@
                     android:layout_marginBottom="@dimen/margin_small">
 
                 </android.support.v7.widget.RecyclerView>
+                -->
             </RelativeLayout>
 
         </android.support.v4.widget.NestedScrollView>

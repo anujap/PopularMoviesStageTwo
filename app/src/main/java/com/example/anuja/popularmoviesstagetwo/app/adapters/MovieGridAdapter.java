@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.example.anuja.popularmoviesstagetwo.R;
 import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
-import com.example.anuja.popularmoviesstagetwo.databinding.ItemListBinding;
+import com.example.anuja.popularmoviesstagetwo.databinding.MoviesItemListBinding;
 import com.example.anuja.popularmoviesstagetwo.webservice.MovieUtils;
 import com.squareup.picasso.Picasso;
 
@@ -40,7 +40,7 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        return new MoviesViewHolder(ItemListBinding.inflate(inflater, parent, false));
+        return new MoviesViewHolder(MoviesItemListBinding.inflate(inflater, parent, false));
     }
 
     @Override
@@ -66,9 +66,9 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
 
     public class MoviesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private ItemListBinding itemListBinding;
+        private MoviesItemListBinding itemListBinding;
 
-        public MoviesViewHolder(ItemListBinding itemListBinding) {
+        public MoviesViewHolder(MoviesItemListBinding itemListBinding) {
             super(itemListBinding.getRoot());
 
             this.itemListBinding = itemListBinding;

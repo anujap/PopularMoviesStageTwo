@@ -6,9 +6,11 @@ import android.databinding.DataBindingUtil;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
 import com.example.anuja.popularmoviesstagetwo.R;
+import com.example.anuja.popularmoviesstagetwo.app.adapters.MovieTrailersListAdapter;
 import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
 import com.example.anuja.popularmoviesstagetwo.databinding.ActivityMovieDetailsBinding;
 import com.example.anuja.popularmoviesstagetwo.viewmodel.MovieDetailViewModel;
@@ -29,6 +31,10 @@ public class MovieDetailsActivity extends BaseActivity {
     private MovieDetailViewModel viewModel;
     private boolean isFavorite;
 
+    private RecyclerView rvTrailers;
+    private MovieTrailersListAdapter trailersListAdapter;
+    //private RecyclerView rvReviews;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +43,7 @@ public class MovieDetailsActivity extends BaseActivity {
         viewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
 
         setUpActionBar();
+        setUpRecyclerViews();
         retrieveIntent(savedInstanceState);
         displayMovieDetails();
         performFABClick();
@@ -51,6 +58,14 @@ public class MovieDetailsActivity extends BaseActivity {
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    /**
+     * Function called to set up the expandable list views for trailers
+     * and reviews
+     */
+    private void setUpRecyclerViews() {
+
     }
 
     /**
@@ -154,7 +169,6 @@ public class MovieDetailsActivity extends BaseActivity {
      */
     private void deleteMovie() {
         isFavorite = false;
-        //movie.setFavorite(isFavorite);
         viewModel.deleteMovie(movie);
         showSnackBar(mBinding.detailsCoordinatorLayout, R.string.str_mv_unfavorite);
     }
@@ -193,7 +207,7 @@ public class MovieDetailsActivity extends BaseActivity {
      */
     @Override
     protected void onConnected() {
-        //retrieveTrailersAndReviews();
+        retrieveTrailersAndReviews();
     }
 
     /**
@@ -202,5 +216,24 @@ public class MovieDetailsActivity extends BaseActivity {
     @Override
     protected void onDisconnected() {
         showSnackBar(mBinding.detailsCoordinatorLayout, R.string.no_connection_message);
+    }
+
+    /**
+     * function called to retrieve the trailers and the reviews specific
+     * to the movie
+     */
+    private void retrieveTrailersAndReviews() {
+        if(movie != null) {
+            viewModel.displayMovieTrailersAndReviews(String.valueOf(movie.getId()));
+
+            viewModel.getMovieTrailerList().observe(this, trailerResults -> {
+                // update the trailers adapter
+            });
+
+            viewModel.getMovieReviewList().observe(this, reviewResults -> {
+                // update the reviews adapter
+            });
+        }
+
     }
  }

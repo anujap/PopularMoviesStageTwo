@@ -18,4 +18,7 @@ public class MovieUtils {
     public static final String BASE_IMG_URL = "http://image.tmdb.org/t/p/";
     public static final String THUMB_IMG_SIZE = "w185";
     public static final String LARGE_IMG_SIZE = "w500";
+
+    public static final String TRAILER_SITE_YOUTUBE = "YouTube";
+    public static final String YOUTUBE_URL_INTENT = "https://www.youtube.com/watch?v=";
 }

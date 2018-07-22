@@ -56,6 +56,7 @@ public class MovieDetailViewModel extends BaseViewModel {
             public void onResponse(Call<TrailerPage> call, Response<TrailerPage> response) {
                 if(response.isSuccessful()) {
                     List<TrailerResults> trailerResults = response.body().getTrailerResults();
+                    Log.i("Test", "trailerResults: " + trailerResults.get(0).getName());
                     if(trailerResults != null && trailerResults.size() > 0) {
                         movieTrailerList.postValue(trailerResults);
                     }
@@ -73,6 +74,7 @@ public class MovieDetailViewModel extends BaseViewModel {
             public void onResponse(Call<ReviewPage> call, Response<ReviewPage> response) {
                 if(response.isSuccessful()) {
                     List<ReviewResults> reviewResults = response.body().getReviewResults();
+                    Log.i("Test", "reviewResults: " + reviewResults.get(0).getAuthor());
                     if(reviewResults != null && reviewResults.size() > 0) {
                         movieReviewList.postValue(reviewResults);
                     }
