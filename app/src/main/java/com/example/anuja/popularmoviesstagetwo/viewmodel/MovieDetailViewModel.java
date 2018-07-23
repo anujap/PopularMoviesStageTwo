@@ -14,6 +14,7 @@ import com.example.anuja.popularmoviesstagetwo.model.TrailerResults;
 import com.example.anuja.popularmoviesstagetwo.webservice.MovieRetrofitClient;
 import com.example.anuja.popularmoviesstagetwo.webservice.MovieUtils;
 import com.example.anuja.popularmoviesstagetwo.webservice.MovieWebserviceInterface;
+import com.example.anuja.popularmoviesstagetwo.webservice.YoutubeRetrofitClient;
 
 import java.util.List;
 
@@ -87,6 +88,8 @@ public class MovieDetailViewModel extends BaseViewModel {
             }
         });
     }
+
+
 
     /**
      * A wrapper method that calls the insert method of

@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
@@ -20,7 +21,7 @@ import com.squareup.picasso.Picasso;
 /**
  * This class shows the details of the movie
  */
-public class MovieDetailsActivity extends BaseActivity {
+public class MovieDetailsActivity extends BaseActivity implements MovieTrailersListAdapter.ListItemClickListener {
 
     private static final String FAV_MOV_ITEM = "fav_mov_item";
 
@@ -65,7 +66,9 @@ public class MovieDetailsActivity extends BaseActivity {
      * and reviews
      */
     private void setUpRecyclerViews() {
-
+        mBinding.rviewTrailers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        trailersListAdapter = new MovieTrailersListAdapter(null, this);
+        mBinding.rviewTrailers.setAdapter(trailersListAdapter);
     }
 
     /**
@@ -228,6 +231,7 @@ public class MovieDetailsActivity extends BaseActivity {
 
             viewModel.getMovieTrailerList().observe(this, trailerResults -> {
                 // update the trailers adapter
+                trailersListAdapter.swapLists(trailerResults);
             });
 
             viewModel.getMovieReviewList().observe(this, reviewResults -> {
@@ -236,4 +240,9 @@ public class MovieDetailsActivity extends BaseActivity {
         }
 
     }
- }
+
+    @Override
+    public void onListItemClick(String url) {
+
+    }
+}

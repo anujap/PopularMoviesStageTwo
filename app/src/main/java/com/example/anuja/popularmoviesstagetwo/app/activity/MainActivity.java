@@ -79,10 +79,9 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
      */
     private void setUpRecyclerView() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, calculateNoOfColumns()));
         movieGridAdapter = new MovieGridAdapter(null, this);
         recyclerView.setAdapter(movieGridAdapter);
-
-        recyclerView.setLayoutManager(new GridLayoutManager(this, calculateNoOfColumns()));
     }
 
     @Override
