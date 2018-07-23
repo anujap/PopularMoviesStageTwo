@@ -13,11 +13,13 @@ import com.example.anuja.popularmoviesstagetwo.app.adapters.MovieTrailersListAda
 
 import java.util.List;
 
+/**
+ * This is an adapter class to display the movie reviews
+ */
 public class MovieReviewsListAdapter extends RecyclerView.Adapter<MovieReviewsListAdapter.ReviewsListViewHolder> {
 
     private List<ReviewResults> reviewResultsList;
     private ListItemClickListener listItemClickListener;
-    private Context context;
 
     public MovieReviewsListAdapter(List<ReviewResults> reviewResultsList, ListItemClickListener listItemClickListener) {
         this.reviewResultsList = reviewResultsList;
@@ -27,7 +29,7 @@ public class MovieReviewsListAdapter extends RecyclerView.Adapter<MovieReviewsLi
     @NonNull
     @Override
     public ReviewsListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        context = parent.getContext();
+        Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         return new ReviewsListViewHolder(ReviewItemListBinding.inflate(inflater, parent, false));
     }
@@ -43,7 +45,6 @@ public class MovieReviewsListAdapter extends RecyclerView.Adapter<MovieReviewsLi
     public int getItemCount() {
         if(reviewResultsList == null)
             return 0;
-
         return reviewResultsList.size();
     }
 

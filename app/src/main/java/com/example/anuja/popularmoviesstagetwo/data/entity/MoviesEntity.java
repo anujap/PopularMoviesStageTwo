@@ -69,12 +69,6 @@ public class MoviesEntity implements Parcelable {
     @SerializedName("original_title")
     private String originalTitle;
 
-    /*
-    @NonNull
-    @ColumnInfo(name="genre_ids")
-    private List<Integer> genreId;
-    */
-
     @NonNull
     @ColumnInfo(name="backdrop_path")
     @SerializedName("backdrop_path")
@@ -180,17 +174,6 @@ public class MoviesEntity implements Parcelable {
     public void setOriginalTitle(@NonNull String originalTitle) {
         this.originalTitle = originalTitle;
     }
-
-    /*
-    @NonNull
-    public List<Integer> getGenreId() {
-        return genreId;
-    }
-
-    public void setGenreId(@NonNull List<Integer> genreId) {
-        this.genreId = genreId;
-    }
-    */
 
     @NonNull
     public String getBackdropPath() {

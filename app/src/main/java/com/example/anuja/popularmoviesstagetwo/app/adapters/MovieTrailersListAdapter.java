@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * This class is responsible for displaying the trailers
+ * This is an adapter class to display the movie trailers
  *
  * NOTE:- this class fetches the key from the trailers object and passes it
  * to the youtube api in order to fetch the trailers url to display it
@@ -59,8 +58,6 @@ public class MovieTrailersListAdapter extends RecyclerView.Adapter<MovieTrailers
     public void onBindViewHolder(@NonNull TrailersListViewHolder holder, int position) {
         TrailerResults trailerResult = trailerResultsList.get(position);
 
-        Log.i("Test", "key: = " + trailerResult.getKey());
-
         if(TextUtils.equals(trailerResult.getSite(), MovieUtils.TRAILER_SITE_YOUTUBE)) {
             webserviceInterface.getYoutubeMovieTrailers(trailerResult.getKey()).enqueue(new Callback<YoutubePage>() {
                 @Override
@@ -75,7 +72,6 @@ public class MovieTrailersListAdapter extends RecyclerView.Adapter<MovieTrailers
 
                 @Override
                 public void onFailure(Call<YoutubePage> call, Throwable t) {
-
                 }
             });
         }
@@ -87,7 +83,6 @@ public class MovieTrailersListAdapter extends RecyclerView.Adapter<MovieTrailers
     public int getItemCount() {
         if(trailerResultsList == null)
             return 0;
-
         return trailerResultsList.size();
     }
 

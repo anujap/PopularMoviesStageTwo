@@ -91,84 +91,42 @@
 
                 <TextView
                     android:id="@+id/lbl_movie_ratings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_movie_title"
-                    android:layout_marginLeft="@dimen/margin"
+                    style="@style/TextStyle"
                     android:layout_marginTop="@dimen/margin_small"
-                    android:layout_marginStart="@dimen/margin"
-                    android:layout_marginEnd="@dimen/margin"
-                    android:layout_marginRight="@dimen/margin"
+                    android:layout_below="@+id/tv_movie_title"
                     android:layout_toEndOf="@+id/cv_poster"
                     android:layout_toRightOf="@+id/cv_poster"
-                    android:fontFamily="sans-serif"
                     android:text="@string/str_movie_rating"
-                    android:textStyle="bold"
-                    tools:text="Ratings"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_movie_ratings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/TextStyle"
                     android:layout_below="@+id/lbl_movie_ratings"
-                    android:layout_marginLeft="@dimen/margin"
-                    android:layout_marginStart="@dimen/margin"
-                    android:layout_marginEnd="@dimen/margin"
-                    android:layout_marginRight="@dimen/margin"
                     android:layout_toEndOf="@+id/cv_poster"
-                    android:layout_toRightOf="@+id/cv_poster"
-                    android:fontFamily="sans-serif"
-                    tools:text="Ratings"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    android:layout_toRightOf="@+id/cv_poster" />
 
                 <TextView
                     android:id="@+id/lbl_movie_release"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/TextStyle"
                     android:layout_below="@+id/tv_movie_ratings"
                     android:layout_marginTop="@dimen/margin_small"
-                    android:layout_marginLeft="@dimen/margin"
-                    android:layout_marginStart="@dimen/margin"
-                    android:layout_marginEnd="@dimen/margin"
-                    android:layout_marginRight="@dimen/margin"
                     android:layout_toEndOf="@+id/cv_poster"
                     android:layout_toRightOf="@+id/cv_poster"
-                    android:fontFamily="sans-serif"
-                    tools:text="Release Date"
                     android:text="@string/str_movie_release_date"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_movie_release"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/TextStyle"
                     android:layout_below="@+id/lbl_movie_release"
-                    android:layout_marginLeft="@dimen/margin"
-                    android:layout_marginStart="@dimen/margin"
-                    android:layout_marginEnd="@dimen/margin"
-                    android:layout_marginRight="@dimen/margin"
                     android:layout_toEndOf="@+id/cv_poster"
-                    android:layout_toRightOf="@+id/cv_poster"
-                    android:fontFamily="sans-serif"
-                    tools:text="Release"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    android:layout_toRightOf="@+id/cv_poster" />
 
                 <View
                     android:id="@+id/viewp"
-                    android:layout_marginLeft="@dimen/margin"
-                    android:layout_marginStart="@dimen/margin"
-                    android:layout_marginEnd="@dimen/margin"
-                    android:layout_marginRight="@dimen/margin"
-                    android:layout_below="@id/cv_poster"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/gray" />
+                    style="@style/ViewStyle"
+                    android:layout_below="@id/cv_poster" />
 
                 <TextView
                     android:id="@+id/lbl_movie_plot"
@@ -177,7 +135,7 @@
                     android:layout_below="@id/viewp"
                     android:layout_marginLeft="@dimen/margin"
                     android:layout_marginRight="@dimen/margin"
-                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:fontFamily="sans-serif"
                     android:textColor="@android:color/black"
                     android:text="@string/str_movie_plot"
@@ -201,14 +159,8 @@
 
                 <View
                     android:id="@+id/viewt"
-                    android:layout_marginLeft="@dimen/margin"
-                    android:layout_marginStart="@dimen/margin"
-                    android:layout_marginEnd="@dimen/margin"
-                    android:layout_marginRight="@dimen/margin"
-                    android:layout_below="@id/tv_movie_plot"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/gray" />
+                    style="@style/ViewStyle"
+                    android:layout_below="@id/tv_movie_plot" />
 
                 <TextView
                     android:id="@+id/lbl_movie_trailers"
@@ -217,7 +169,7 @@
                     android:layout_below="@id/viewt"
                     android:layout_marginLeft="@dimen/margin"
                     android:layout_marginRight="@dimen/margin"
-                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:fontFamily="sans-serif"
                     android:textColor="@android:color/black"
                     android:text="@string/str_movie_trailers"
@@ -244,14 +196,8 @@
 
                 <View
                     android:id="@+id/viewr"
-                    android:layout_marginLeft="@dimen/margin"
-                    android:layout_marginStart="@dimen/margin"
-                    android:layout_marginEnd="@dimen/margin"
-                    android:layout_marginRight="@dimen/margin"
-                    android:layout_below="@id/rview_trailers"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/gray" />
+                    style="@style/ViewStyle"
+                    android:layout_below="@id/rview_trailers" />
 
                 <TextView
                     android:id="@+id/lbl_movie_reviews"
@@ -260,7 +206,7 @@
                     android:layout_below="@id/viewr"
                     android:layout_marginLeft="@dimen/margin"
                     android:layout_marginRight="@dimen/margin"
-                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:fontFamily="sans-serif"
                     android:textColor="@android:color/black"
                     android:text="@string/str_movie_reviews"
@@ -277,7 +223,6 @@
                     android:scrollbars="none"
                     android:layout_marginLeft="@dimen/margin"
                     android:layout_marginRight="@dimen/margin"
-                    android:layout_marginTop="@dimen/margin_large"
                     android:fontFamily="sans-serif"
                     android:textColor="@android:color/black"
                     android:textStyle="bold"

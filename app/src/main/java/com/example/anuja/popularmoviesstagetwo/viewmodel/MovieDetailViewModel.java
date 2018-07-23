@@ -3,7 +3,6 @@ package com.example.anuja.popularmoviesstagetwo.viewmodel;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.os.Handler;
 import android.util.Log;
 
 import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
@@ -14,7 +13,6 @@ import com.example.anuja.popularmoviesstagetwo.model.TrailerResults;
 import com.example.anuja.popularmoviesstagetwo.webservice.MovieRetrofitClient;
 import com.example.anuja.popularmoviesstagetwo.webservice.MovieUtils;
 import com.example.anuja.popularmoviesstagetwo.webservice.MovieWebserviceInterface;
-import com.example.anuja.popularmoviesstagetwo.webservice.YoutubeRetrofitClient;
 
 import java.util.List;
 
@@ -48,7 +46,7 @@ public class MovieDetailViewModel extends BaseViewModel {
     }
 
     /**
-     * Function called to download the trailers and reviews specific
+     * function called to download the trailers and reviews specific
      * to the movie
      */
     public void displayMovieTrailersAndReviews(String id) {

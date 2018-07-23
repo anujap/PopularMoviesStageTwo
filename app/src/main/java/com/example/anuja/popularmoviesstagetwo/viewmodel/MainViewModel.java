@@ -53,7 +53,7 @@ public class MainViewModel extends BaseViewModel {
     }
 
     /**
-     * Function used to download the movies specific to the endpoints
+     * function used to download the movies specific to the endpoints
      */
     public void displayMovies() {
         if(popularMoviesList == null) {
@@ -96,7 +96,7 @@ public class MainViewModel extends BaseViewModel {
     }
 
     /**
-     * Function called to display movies marked as favorite from the
+     * function called to display movies marked as favorite from the
      * database
      */
     public LiveData<List<MoviesEntity>> getFavoriteMoviesList() {

@@ -1,18 +1,12 @@
 package com.example.anuja.popularmoviesstagetwo.app.activity;
 
 import android.arch.lifecycle.Observer;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
-import com.example.anuja.popularmoviesstagetwo.R;
 import com.example.anuja.popularmoviesstagetwo.common.ConnectionStatus;
 import com.example.anuja.popularmoviesstagetwo.model.ConnectionModel;
 import com.example.anuja.popularmoviesstagetwo.receiver.NetworkConnectivityReceiver;
@@ -34,9 +28,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         handleConnectivity();
-
     }
 
     /**
@@ -56,7 +48,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * Function called to show snack bar
+     * function called to show snack bar
      * @param resId - res id to display the message
      */
     protected void showSnackBar(CoordinatorLayout coordinatorLayout, int resId) {

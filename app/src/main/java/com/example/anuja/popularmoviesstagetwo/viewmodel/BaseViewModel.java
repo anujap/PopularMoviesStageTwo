@@ -6,6 +6,9 @@ import android.arch.lifecycle.AndroidViewModel;
 import com.example.anuja.popularmoviesstagetwo.app.MovieApplication;
 import com.example.anuja.popularmoviesstagetwo.app.service.MovieDbService;
 
+/**
+ * This is the base class to all the view models
+ */
 public abstract class BaseViewModel extends AndroidViewModel {
 
     // reference to the movie service

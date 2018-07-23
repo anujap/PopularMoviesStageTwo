@@ -10,16 +10,18 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <ImageView
+                android:id="@+id/iv_trailer_item"
+                android:layout_gravity="center"
                 android:layout_width="320dp"
                 android:layout_height="180dp"
-                android:id="@+id/iv_trailer_item"/>
+                />
             <TextView
+                android:id="@+id/tv_trailer_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"
-                android:id="@+id/tv_trailer_item"/>
+                android:textSize="16sp"
+                android:textColor="@android:color/black" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </layout>

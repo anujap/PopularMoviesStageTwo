@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -64,7 +63,7 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
     }
 
     /**
-     * Function called to set up the toolbar
+     * function called to set up the toolbar
      */
     private void setUpToolBar() {
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator_layout);
@@ -74,7 +73,7 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
     }
 
     /**
-     * Function called to set up the recycler view and display
+     * function called to set up the recycler view and display
      * the list of movies
      */
     private void setUpRecyclerView() {
@@ -121,7 +120,7 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
     }
 
     /**
-     * Function called to display the list of movies based on the menu
+     * function called to display the list of movies based on the menu
      * selection - Popular/Top Rated
      * @param item - Menu item
      * @param movies - list of movies (Popular/Top Rated/Favorite)
@@ -132,7 +131,7 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
     }
 
     /**
-     * Function called to display the list of movies based on the menu
+     * function called to display the list of movies based on the menu
      * selection - Favorite
      * @param item - Menu item
      */
@@ -142,7 +141,7 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
     }
 
     /**
-     * Function called to update the menu based on the selection
+     * function called to update the menu based on the selection
      */
     private void updateMenuSelection(MenuItem item) {
         item.setChecked(item.isChecked() ? false : true);
@@ -170,7 +169,7 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
     }
 
     /**
-     * Function called to retrieve favorite movies from the database
+     * function called to retrieve favorite movies from the database
      */
     private void retrieveFavoriteMovies() {
         mainViewModel.getFavoriteMoviesList().observe(this, movieEntities -> {
@@ -180,18 +179,17 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
     }
 
     /**
-     * Function called when the grid item is clicked.
+     * function called when the grid item is clicked.
      */
     @Override
     public void onGridItemClick(MoviesEntity movie) {
-        //click event when an item is clicked
         Intent intent = new Intent(this, MovieDetailsActivity.class);
         intent.putExtra(MOVIE_DETAIL_ITEM, movie);
         startActivity(intent);
     }
 
     /**
-     * Function called when the connection is available
+     * function called when the connection is available
      */
     @Override
     protected void onConnected() {
@@ -199,7 +197,7 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
     }
 
     /**
-     * Function called when the connection is not available
+     * function called when the connection is not available
      */
     @Override
     protected void onDisconnected() {
@@ -219,7 +217,6 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
         outState.putString(SORT_OPTION, sortMovie);
     }
 }

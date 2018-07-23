@@ -18,13 +18,13 @@ import java.util.List;
 /**
  * This is an adapter class to display movies in the grid format
  */
-
 public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.MoviesViewHolder> {
 
     private List<MoviesEntity> movieList;
     private GridItemClickListener itemClickListener;
     private Context context;
 
+    // listener interface
     public interface GridItemClickListener {
         void onGridItemClick(MoviesEntity movie);
     }
@@ -39,7 +39,6 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
     public MoviesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-
         return new MoviesViewHolder(MoviesItemListBinding.inflate(inflater, parent, false));
     }
 
@@ -60,7 +59,6 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
     public int getItemCount() {
         if (movieList == null)
             return 0;
-
         return movieList.size();
     }
 
@@ -70,10 +68,7 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
 
         public MoviesViewHolder(MoviesItemListBinding itemListBinding) {
             super(itemListBinding.getRoot());
-
             this.itemListBinding = itemListBinding;
-
-            //click listener
             itemView.setOnClickListener(this);
         }
 

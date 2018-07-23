@@ -27,19 +27,21 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
     private static final String FAV_MOV_ITEM = "fav_mov_item";
 
     private ActivityMovieDetailsBinding mBinding;
-    private MoviesEntity movie = null;
 
     // viewmodel
     private MovieDetailViewModel viewModel;
-    private boolean isFavorite;
 
     private MovieTrailersListAdapter trailersListAdapter;
     private MovieReviewsListAdapter reviewsListAdapter;
+
+    private MoviesEntity movie = null;
+    private boolean isFavorite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_movie_details);
+
         // get the viewmodel
         viewModel = ViewModelProviders.of(this).get(MovieDetailViewModel.class);
 
@@ -51,7 +53,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
     }
 
     /**
-     * Function called to handle the action bar
+     * function called to handle the action bar
      */
     private void setUpActionBar() {
         setSupportActionBar(mBinding.toolbar);
@@ -62,7 +64,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
     }
 
     /**
-     * Function called to set up the recycler views for trailers
+     * function called to set up the recycler views for trailers
      * and reviews
      */
     private void setUpRecyclerViews() {
@@ -71,15 +73,17 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
         mBinding.rviewTrailers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         trailersListAdapter = new MovieTrailersListAdapter(null, this);
         mBinding.rviewTrailers.setAdapter(trailersListAdapter);
+        mBinding.rviewTrailers.setNestedScrollingEnabled(false);
 
         // reviews recycler view
         mBinding.rviewReviews.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         reviewsListAdapter = new MovieReviewsListAdapter(null, this);
         mBinding.rviewReviews.setAdapter(reviewsListAdapter);
+        mBinding.rviewReviews.setNestedScrollingEnabled(false);
     }
 
     /**
-     * Function called to get the intent - this intent
+     * function called to get the intent - this intent
      * has the details about the movie that was clicked
      * in the previous activity
      */
@@ -92,7 +96,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
     }
 
     /**
-     * Function called to toggle the favorite button
+     * function called to toggle the favorite button
      */
     private void toggleFavButton(Bundle savedInstanceState) {
         if(savedInstanceState != null && savedInstanceState.containsKey(FAV_MOV_ITEM)) {
@@ -110,7 +114,6 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
      */
     private void setFavButton(int id) {
         viewModel.isMovieFavById(id).observe(this, isFav -> {
-
             if(isFav != null)
                 this.isFavorite = isFav;
             else
@@ -121,7 +124,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
     }
 
     /**
-     * Function called to display movie specific information
+     * function called to display movie specific information
      */
     private void displayMovieDetails() {
         if(movie != null) {
@@ -154,7 +157,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
     }
 
     /**
-     * Function called to handle the favorite button click.
+     * function called to handle the favorite button click.
      * This button will insert/delete the movie from the database
      */
     private void handleFavoriteMovieClick() {
@@ -165,7 +168,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
     }
 
     /**
-     * Function called to insert the movie into the database
+     * function called to insert the movie into the database
      */
     private void insertMovie() {
         isFavorite = true;
@@ -175,7 +178,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
     }
 
     /**
-     * Function called to delete movie from the database
+     * function called to delete movie from the database
      */
     private void deleteMovie() {
         isFavorite = false;
@@ -184,7 +187,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
     }
 
     /**
-     * Function called to toggle favorite button image
+     * function called to toggle favorite button image
      */
     private void toggleFABImageResource() {
         if(isFavorite)
@@ -212,7 +215,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
     }
 
     /**
-     * Function called when the connection is available
+     * function called when the connection is available
      */
     @Override
     protected void onConnected() {
@@ -220,7 +223,7 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
     }
 
     /**
-     * Function called when the connection is unavailable
+     * function called when the connection is unavailable
      */
     @Override
     protected void onDisconnected() {
