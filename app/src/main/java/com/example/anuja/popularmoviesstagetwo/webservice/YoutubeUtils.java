@@ -1,7 +1,7 @@
 package com.example.anuja.popularmoviesstagetwo.webservice;
 
 public class YoutubeUtils {
-    public static final String YOUTUBE_API_KEY = "";
+    public static final String YOUTUBE_API_KEY = "AIzaSyADBc-DWliub9IWz-F6pcTeDI_OG3jlv9I";
     public static final String YOUTUBE_URL = "https://www.googleapis.com/";
     public static final String YOUTUBE_ENDPOINT_PARAM = "youtube/v3/videos/";
     public static final String YOUTUBE_PARAM_KEY = "key=";

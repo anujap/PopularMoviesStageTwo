@@ -3,6 +3,7 @@ package com.example.anuja.popularmoviesstagetwo.app.activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
@@ -241,8 +242,13 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
 
     }
 
+    /**
+     * launch the trailer
+     */
     @Override
     public void onListItemClick(String url) {
-
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
     }
 }
