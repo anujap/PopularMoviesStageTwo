@@ -75,7 +75,6 @@ public class MovieDetailViewModel extends BaseViewModel {
             public void onResponse(Call<ReviewPage> call, Response<ReviewPage> response) {
                 if(response.isSuccessful()) {
                     List<ReviewResults> reviewResults = response.body().getReviewResults();
-                    Log.i("Test", "reviewResults: " + reviewResults.get(0).getAuthor());
                     if(reviewResults != null && reviewResults.size() > 0) {
                         movieReviewList.postValue(reviewResults);
                     }

@@ -8,10 +8,10 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
 import com.example.anuja.popularmoviesstagetwo.R;
+import com.example.anuja.popularmoviesstagetwo.app.adapters.MovieReviewsListAdapter;
 import com.example.anuja.popularmoviesstagetwo.app.adapters.MovieTrailersListAdapter;
 import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
 import com.example.anuja.popularmoviesstagetwo.databinding.ActivityMovieDetailsBinding;
@@ -33,9 +33,8 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
     private MovieDetailViewModel viewModel;
     private boolean isFavorite;
 
-    private RecyclerView rvTrailers;
     private MovieTrailersListAdapter trailersListAdapter;
-    //private RecyclerView rvReviews;
+    private MovieReviewsListAdapter reviewsListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +62,20 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
     }
 
     /**
-     * Function called to set up the expandable list views for trailers
+     * Function called to set up the recycler views for trailers
      * and reviews
      */
     private void setUpRecyclerViews() {
+
+        // trailer recycler view
         mBinding.rviewTrailers.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         trailersListAdapter = new MovieTrailersListAdapter(null, this);
         mBinding.rviewTrailers.setAdapter(trailersListAdapter);
+
+        // reviews recycler view
+        mBinding.rviewReviews.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        reviewsListAdapter = new MovieReviewsListAdapter(null, this);
+        mBinding.rviewReviews.setAdapter(reviewsListAdapter);
     }
 
     /**
@@ -202,7 +208,6 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
         outState.putBoolean(FAV_MOV_ITEM, isFavorite);
     }
 
@@ -237,13 +242,14 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
 
             viewModel.getMovieReviewList().observe(this, reviewResults -> {
                 // update the reviews adapter
+                reviewsListAdapter.swapLists(reviewResults);
             });
         }
 
     }
 
     /**
-     * launch the trailer
+     * launches the trailer/reviews
      */
     @Override
     public void onListItemClick(String url) {
