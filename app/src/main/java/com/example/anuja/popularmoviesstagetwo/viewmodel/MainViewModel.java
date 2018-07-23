@@ -63,8 +63,9 @@ public class MainViewModel extends BaseViewModel {
                     if(response.isSuccessful()) {
 
                         List<MoviesEntity> movieList = response.body().getResults();
-                        if(movieList != null && movieList.size() > 0)
+                        if(movieList != null && movieList.size() > 0) {
                             popularMoviesList.postValue(movieList);
+                        }
                     }
                 }
 

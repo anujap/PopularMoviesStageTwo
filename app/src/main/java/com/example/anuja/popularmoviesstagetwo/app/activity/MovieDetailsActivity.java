@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.example.anuja.popularmoviesstagetwo.R;
 import com.example.anuja.popularmoviesstagetwo.app.adapters.MovieReviewsListAdapter;
@@ -24,8 +23,6 @@ import com.squareup.picasso.Picasso;
  * This class shows the details of the movie
  */
 public class MovieDetailsActivity extends BaseActivity implements MovieTrailersListAdapter.ListItemClickListener {
-
-    private static final String FAV_MOV_ITEM = "fav_mov_item";
 
     private ActivityMovieDetailsBinding mBinding;
 
@@ -92,19 +89,6 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
         Intent intent = getIntent();
         if(intent.hasExtra(MainActivity.MOVIE_DETAIL_ITEM)) {
             movie = intent.getParcelableExtra(MainActivity.MOVIE_DETAIL_ITEM);
-            toggleFavButton(savedInstanceState);
-        }
-    }
-
-    /**
-     * function called to toggle the favorite button
-     */
-    private void toggleFavButton(Bundle savedInstanceState) {
-        if(savedInstanceState != null && savedInstanceState.containsKey(FAV_MOV_ITEM)) {
-            isFavorite = savedInstanceState.getBoolean(FAV_MOV_ITEM);
-            toggleFABImageResource();
-        }
-        else {
             setFavButton(movie.getId());
         }
     }
@@ -209,12 +193,6 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean(FAV_MOV_ITEM, isFavorite);
-    }
-
     /**
      * function called when the connection is available
      */
@@ -240,32 +218,15 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
             viewModel.displayMovieTrailersAndReviews(String.valueOf(movie.getId()));
 
             viewModel.getMovieTrailerList().observe(this, trailerResults -> {
-                if(trailerResults == null || trailerResults.size() == 0) {
-                    mBinding.viewt.setVisibility(View.GONE);
-                    mBinding.lblMovieTrailers.setVisibility(View.GONE);
-                }
-                else {
-                    // update the trailers adapter
-                    mBinding.viewt.setVisibility(View.VISIBLE);
-                    mBinding.lblMovieTrailers.setVisibility(View.VISIBLE);
-                    trailersListAdapter.swapLists(trailerResults);
-                }
+                // update the trailers adapter
+                trailersListAdapter.swapLists(trailerResults);
             });
 
             viewModel.getMovieReviewList().observe(this, reviewResults -> {
-                if(reviewResults == null || reviewResults.size() == 0) {
-                    mBinding.viewr.setVisibility(View.GONE);
-                    mBinding.lblMovieReviews.setVisibility(View.GONE);
-                }
-                else {
-                    mBinding.viewr.setVisibility(View.VISIBLE);
-                    mBinding.lblMovieReviews.setVisibility(View.VISIBLE);
-                    // update the reviews adapter
-                    reviewsListAdapter.swapLists(reviewResults);
-                }
+                // update the reviews adapter
+                reviewsListAdapter.swapLists(reviewResults);
             });
         }
-
     }
 
     /**

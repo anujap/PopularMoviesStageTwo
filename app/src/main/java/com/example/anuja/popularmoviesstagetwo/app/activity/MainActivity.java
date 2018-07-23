@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -59,7 +60,9 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
         setUpToolBar();
         setUpRecyclerView();
 
-        retrieveFavoriteMovies();
+        if(TextUtils.equals(sortMovie, SortMovie.FAVORITE.name())) {
+            retrieveFavoriteMovies();
+        }
     }
 
     /**
@@ -201,6 +204,8 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
      */
     @Override
     protected void onDisconnected() {
+        if(TextUtils.equals(sortMovie, SortMovie.FAVORITE.name()))
+            retrieveFavoriteMovies();
         showSnackBar(coordinatorLayout, R.string.no_connection_message);
     }
 

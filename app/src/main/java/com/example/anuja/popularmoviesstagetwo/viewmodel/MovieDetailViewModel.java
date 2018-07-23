@@ -55,7 +55,6 @@ public class MovieDetailViewModel extends BaseViewModel {
             public void onResponse(Call<TrailerPage> call, Response<TrailerPage> response) {
                 if(response.isSuccessful()) {
                     List<TrailerResults> trailerResults = response.body().getTrailerResults();
-                    Log.i("Test", "trailerResults: " + trailerResults.get(0).getName());
                     if(trailerResults != null && trailerResults.size() > 0) {
                         movieTrailerList.postValue(trailerResults);
                     }

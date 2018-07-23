@@ -2,6 +2,7 @@ package com.example.anuja.popularmoviesstagetwo.app.service;
 
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.anuja.popularmoviesstagetwo.data.dal.MoviesDAO;
 import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
