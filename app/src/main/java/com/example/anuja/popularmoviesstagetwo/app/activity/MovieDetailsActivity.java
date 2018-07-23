@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.anuja.popularmoviesstagetwo.R;
 import com.example.anuja.popularmoviesstagetwo.app.adapters.MovieReviewsListAdapter;
@@ -239,13 +240,29 @@ public class MovieDetailsActivity extends BaseActivity implements MovieTrailersL
             viewModel.displayMovieTrailersAndReviews(String.valueOf(movie.getId()));
 
             viewModel.getMovieTrailerList().observe(this, trailerResults -> {
-                // update the trailers adapter
-                trailersListAdapter.swapLists(trailerResults);
+                if(trailerResults == null || trailerResults.size() == 0) {
+                    mBinding.viewt.setVisibility(View.GONE);
+                    mBinding.lblMovieTrailers.setVisibility(View.GONE);
+                }
+                else {
+                    // update the trailers adapter
+                    mBinding.viewt.setVisibility(View.VISIBLE);
+                    mBinding.lblMovieTrailers.setVisibility(View.VISIBLE);
+                    trailersListAdapter.swapLists(trailerResults);
+                }
             });
 
             viewModel.getMovieReviewList().observe(this, reviewResults -> {
-                // update the reviews adapter
-                reviewsListAdapter.swapLists(reviewResults);
+                if(reviewResults == null || reviewResults.size() == 0) {
+                    mBinding.viewr.setVisibility(View.GONE);
+                    mBinding.lblMovieReviews.setVisibility(View.GONE);
+                }
+                else {
+                    mBinding.viewr.setVisibility(View.VISIBLE);
+                    mBinding.lblMovieReviews.setVisibility(View.VISIBLE);
+                    // update the reviews adapter
+                    reviewsListAdapter.swapLists(reviewResults);
+                }
             });
         }
 

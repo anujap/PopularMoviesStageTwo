@@ -64,10 +64,10 @@ public class MovieTrailersListAdapter extends RecyclerView.Adapter<MovieTrailers
                 public void onResponse(Call<YoutubePage> call, Response<YoutubePage> response) {
                     String url = response.body().getItems().get(0).getSnippet().getThumbnails().getMedium().getUrl();
                     Picasso.with(context)
-                            .load(url)
-                            .fit()
-                            .placeholder(R.drawable.movie_poster_placeholder)
-                            .into(holder.itemListBinding.ivTrailerItem);
+                                .load(url)
+                                .fit()
+                                .placeholder(R.drawable.movie_poster_placeholder)
+                                .into(holder.itemListBinding.ivTrailerItem);
                 }
 
                 @Override
