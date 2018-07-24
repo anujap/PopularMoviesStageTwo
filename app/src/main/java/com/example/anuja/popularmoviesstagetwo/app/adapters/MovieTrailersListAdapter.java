@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,12 +63,14 @@ public class MovieTrailersListAdapter extends RecyclerView.Adapter<MovieTrailers
             webserviceInterface.getYoutubeMovieTrailers(trailerResult.getKey()).enqueue(new Callback<YoutubePage>() {
                 @Override
                 public void onResponse(Call<YoutubePage> call, Response<YoutubePage> response) {
-                    String url = response.body().getItems().get(0).getSnippet().getThumbnails().getMedium().getUrl();
-                    Picasso.with(context)
+                    if(response.isSuccessful()) {
+                        String url = response.body().getItems().get(0).getSnippet().getThumbnails().getMedium().getUrl();
+                        Picasso.with(context)
                                 .load(url)
                                 .fit()
                                 .placeholder(R.drawable.movie_poster_placeholder)
                                 .into(holder.itemListBinding.ivTrailerItem);
+                    }
                 }
 
                 @Override

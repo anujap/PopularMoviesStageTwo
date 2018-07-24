@@ -3,6 +3,7 @@ package com.example.anuja.popularmoviesstagetwo.app.activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,18 +28,22 @@ import java.util.List;
  * menu selection - Popular/Top Rated/Favorite.
  *
  * References:- https://stackoverflow.com/questions/33575731/gridlayoutmanager-how-to-auto-fit-columns
+ *              https://guides.codepath.com/android/Handling-Configuration-Changes
  */
 public class MainActivity extends BaseActivity implements MovieGridAdapter.GridItemClickListener {
 
     // constants
     protected static final String MOVIE_DETAIL_ITEM = "movie_detail_item";
     private static final String SORT_OPTION = "sort";
+    private static final String LIST_STATE = "list_state";
 
     // toolbar
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private MovieGridAdapter movieGridAdapter;
     private CoordinatorLayout coordinatorLayout;
+
+    private Parcelable listState = null;
 
     // viewmodel
     private MainViewModel mainViewModel;
@@ -58,7 +63,7 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
         setUpToolBar();
-        setUpRecyclerView();
+        setUpRecyclerView(savedInstanceState);
 
         if(TextUtils.equals(sortMovie, SortMovie.FAVORITE.name())) {
             retrieveFavoriteMovies();
@@ -79,7 +84,7 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
      * function called to set up the recycler view and display
      * the list of movies
      */
-    private void setUpRecyclerView() {
+    private void setUpRecyclerView(Bundle savedInstanceState) {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(this, calculateNoOfColumns()));
         movieGridAdapter = new MovieGridAdapter(null, this);
@@ -161,14 +166,23 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
         mainViewModel.getTopRatedMoviesList().observe(this, moviesEntities -> {
             if(TextUtils.equals(sortMovie, SortMovie.TOP_RATED.name())) {
                 movieGridAdapter.swapLists(moviesEntities);
+                restoreRecyclerViewState();
             }
         });
 
         mainViewModel.getPopularMoviesList().observe(this, moviesEntities -> {
             if(TextUtils.equals(sortMovie, SortMovie.POPULAR.name())) {
                 movieGridAdapter.swapLists(moviesEntities);
+                restoreRecyclerViewState();
             }
         });
+    }
+
+    /**
+     * function called to restore the recycler view state
+     */
+    private void restoreRecyclerViewState() {
+        recyclerView.getLayoutManager().onRestoreInstanceState(listState);
     }
 
     /**
@@ -177,7 +191,7 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
     private void retrieveFavoriteMovies() {
         mainViewModel.getFavoriteMoviesList().observe(this, movieEntities -> {
             movieGridAdapter.swapLists(movieEntities);
-
+            restoreRecyclerViewState();
         });
     }
 
@@ -223,5 +237,15 @@ public class MainActivity extends BaseActivity implements MovieGridAdapter.GridI
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(SORT_OPTION, sortMovie);
+        outState.putParcelable(LIST_STATE, recyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if(savedInstanceState != null && savedInstanceState.containsKey(LIST_STATE)) {
+            listState = savedInstanceState.getParcelable(LIST_STATE);
+        }
     }
 }

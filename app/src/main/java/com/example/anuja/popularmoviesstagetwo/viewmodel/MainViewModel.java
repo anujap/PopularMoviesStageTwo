@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
+import com.example.anuja.popularmoviesstagetwo.BuildConfig;
 import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
 import com.example.anuja.popularmoviesstagetwo.model.MoviePage;
 import com.example.anuja.popularmoviesstagetwo.webservice.MovieRetrofitClient;
@@ -57,7 +58,7 @@ public class MainViewModel extends BaseViewModel {
      */
     public void displayMovies() {
         if(popularMoviesList == null) {
-            movieWebservice.getMovies(MovieUtils.ENDPOINT_POPULARITY, MovieUtils.API_KEY).enqueue(new Callback<MoviePage>() {
+            movieWebservice.getMovies(MovieUtils.ENDPOINT_POPULARITY, BuildConfig.ApiKey).enqueue(new Callback<MoviePage>() {
                 @Override
                 public void onResponse(Call<MoviePage> call, Response<MoviePage> response) {
                     if(response.isSuccessful()) {
@@ -77,7 +78,7 @@ public class MainViewModel extends BaseViewModel {
         }
 
         if(topRatedMoviesList == null) {
-            movieWebservice.getMovies(MovieUtils.ENDPOINT_TOP_RATED, MovieUtils.API_KEY).enqueue(new Callback<MoviePage>() {
+            movieWebservice.getMovies(MovieUtils.ENDPOINT_TOP_RATED, BuildConfig.ApiKey).enqueue(new Callback<MoviePage>() {
                 @Override
                 public void onResponse(Call<MoviePage> call, Response<MoviePage> response) {
                     if(response.isSuccessful()) {

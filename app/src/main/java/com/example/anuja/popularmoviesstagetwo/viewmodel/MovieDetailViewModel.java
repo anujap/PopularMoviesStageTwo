@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
+import com.example.anuja.popularmoviesstagetwo.BuildConfig;
 import com.example.anuja.popularmoviesstagetwo.data.entity.MoviesEntity;
 import com.example.anuja.popularmoviesstagetwo.model.ReviewPage;
 import com.example.anuja.popularmoviesstagetwo.model.ReviewResults;
@@ -50,7 +51,7 @@ public class MovieDetailViewModel extends BaseViewModel {
      * to the movie
      */
     public void displayMovieTrailersAndReviews(String id) {
-        movieWebservice.getMovieTrailers(id, MovieUtils.API_KEY).enqueue(new Callback<TrailerPage>() {
+        movieWebservice.getMovieTrailers(id, BuildConfig.ApiKey).enqueue(new Callback<TrailerPage>() {
             @Override
             public void onResponse(Call<TrailerPage> call, Response<TrailerPage> response) {
                 if(response.isSuccessful()) {
@@ -67,7 +68,7 @@ public class MovieDetailViewModel extends BaseViewModel {
             }
         });
 
-        movieWebservice.getMovieReviews(id, MovieUtils.API_KEY).enqueue(new Callback<ReviewPage>() {
+        movieWebservice.getMovieReviews(id, BuildConfig.ApiKey).enqueue(new Callback<ReviewPage>() {
             @Override
             public void onResponse(Call<ReviewPage> call, Response<ReviewPage> response) {
                 if(response.isSuccessful()) {

@@ -12,7 +12,6 @@ public class MovieUtils {
     public static final String MOVIE_PATH = "3/movie/";
     public static final String API_KEY_PARAM = "api_key";
     public static final String ENDPOINT_PARAM = "endpoint";
-    public static final String API_KEY = "";
     public static final String ENDPOINT_POPULARITY = "popular";
     public static final String ENDPOINT_TOP_RATED = "top_rated";
 
